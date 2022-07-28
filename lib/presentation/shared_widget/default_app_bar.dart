@@ -28,6 +28,7 @@ class DefaultAppBar extends StatelessWidget {
                   child: Icon(
                     IconBroken.Arrow___Left_2,
                     size: 22,
+                    color: context.primaryColor,
                   )),
               SizedBox(
                 width: 17,

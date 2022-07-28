@@ -19,3 +19,8 @@ class DeleteDataBaseState extends AppStates {}
 class GetselectedDateState extends AppStates {}
 
 class GetTasksAfterFiltrationState extends AppStates {}
+
+//ChangeThemeMode
+class ChangeThemeModeState extends AppStates {}
+
+class GetIsDarkFromSharedPredState extends AppStates {}

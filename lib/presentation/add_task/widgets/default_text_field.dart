@@ -33,18 +33,48 @@ class DefaultFormField extends StatelessWidget {
         keyboardType: inputType,
         onChanged: onChange,
         validator: validate,
-        style: context.caption?.copyWith(fontSize: 18),
-        cursorColor: Colors.grey[400],
+        style: context.bodyText1,
+        cursorColor: context.primaryColor,
         decoration: InputDecoration(
-          hintStyle:
-              context.caption?.copyWith(fontSize: 18, color: Colors.grey[200]),
-          border: AppBorderStyles.OutlineInputBorderStyle(),
-          focusedBorder: AppBorderStyles.OutlineInputBorderStyle(),
+          hintStyle: context.caption?.copyWith(fontSize: 16),
+          enabledBorder: OutlineInputBorder(
+              // ignore: prefer_const_constructors
+              borderSide: BorderSide(
+                width: 1,
+                color: context.primaryColor,
+                style: BorderStyle.solid,
+              ),
+              borderRadius: BorderRadius.circular(8.0)),
+          border: OutlineInputBorder(
+              // ignore: prefer_const_constructors
+              borderSide: BorderSide(
+                width: 1,
+                color: context.primaryColor,
+                style: BorderStyle.solid,
+              ),
+              borderRadius: BorderRadius.circular(8.0)),
+          focusedBorder: OutlineInputBorder(
+              // ignore: prefer_const_constructors
+              borderSide: BorderSide(
+                width: 1,
+                color: context.primaryColor,
+                style: BorderStyle.solid,
+              ),
+              borderRadius: BorderRadius.circular(8.0)),
           //enabledBorder: InputBorder.none,
-          errorBorder: AppBorderStyles.OutlineInputBorderStyle(),
+          errorBorder: OutlineInputBorder(
+              // ignore: prefer_const_constructors
+              borderSide: BorderSide(
+                width: 1,
+                color: context.primaryColor,
+                style: BorderStyle.solid,
+              ),
+              borderRadius: BorderRadius.circular(8.0)),
 
           filled: true,
-          fillColor: Colors.grey[50],
+          fillColor: context.cubit.themeMode == ThemeMode.dark
+              ? Colors.black
+              : Colors.white,
           hintText: hint,
           suffixIcon: widget,
         ),

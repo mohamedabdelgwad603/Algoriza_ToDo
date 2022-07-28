@@ -1,21 +1,20 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todo/models/task.dart';
+import 'package:todo/network/local/cashe_helper.dart';
 
+import '../config/themes/app_theme.dart';
 import 'states.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(intialState());
 
   late Database database;
-  // List<Map> alltasks = [];
-  // List<Map> completedtasks = [];
-  // List<Map> unCompletedtasks = [];
-
-  // delete() async {
+  // deleteAll() async {
   //   await deleteDatabase('todo.db').then((value) => print('deleted'));
   // }
 
@@ -168,4 +167,28 @@ class AppCubit extends Cubit<AppStates> {
       }
     });
   }
+
+//change themMode
+  bool? isDark;
+  changeThemeMode() {
+    if (isDark == false || isDark == null) {
+      isDark = true;
+      setIsDarkToSharedPred(true);
+    } else {
+      isDark = false;
+      setIsDarkToSharedPred(false);
+    }
+    emit(ChangeThemeModeState());
+  }
+
+  setIsDarkToSharedPred(bool isDark) {
+    CashHelper.setData('isDark', isDark);
+  }
+
+  getIsDarkFromSharedPred() {
+    isDark = CashHelper.getData('isDark');
+    emit(GetIsDarkFromSharedPredState());
+  }
+
+  ThemeMode get themeMode => isDark == true ? ThemeMode.dark : ThemeMode.light;
 }

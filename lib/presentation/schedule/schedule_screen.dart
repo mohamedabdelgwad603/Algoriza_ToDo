@@ -37,6 +37,7 @@ class ScheduleScreen extends StatelessWidget {
                   text: 'Schedule',
                   onPressedArrow: () {
                     Constants.pushReplace(context, BoardLayoutScreen());
+                    cubit.selectedDate = DateTime.now();
                   },
                 ),
                 //Date picker
@@ -44,10 +45,10 @@ class ScheduleScreen extends StatelessWidget {
                 DefaultDivider(),
                 Expanded(
                     child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

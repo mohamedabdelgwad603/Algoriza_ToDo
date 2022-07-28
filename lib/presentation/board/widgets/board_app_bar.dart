@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/core/utils/constants.dart';
 import 'package:todo/core/utils/extentions.dart';
+import 'package:todo/cubit/cubit.dart';
 import 'package:todo/presentation/schedule/schedule_screen.dart';
 
 import '../../../config/styles/icon_broken.dart';
@@ -13,6 +15,7 @@ class BoardAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = BlocProvider.of<AppCubit>(context);
     return Column(
       children: [
         SizedBox(
@@ -31,24 +34,30 @@ class BoardAppBar extends StatelessWidget {
                   child: Icon(
                     IconBroken.Search,
                     size: 28,
+                    color: context.primaryColor,
                   )),
               MaterialButton(
                   padding: EdgeInsets.zero,
                   minWidth: 1,
-                  onPressed: () {},
+                  onPressed: () {
+                    cubit.changeThemeMode();
+                  },
                   child: Icon(
-                    IconBroken.Notification,
+                    Icons.brightness_3_outlined,
                     size: 28,
+                    color: context.primaryColor,
                   )),
               MaterialButton(
                   minWidth: 1,
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     Constants.push(context, ScheduleScreen());
+                    cubit.getTasksAfterFiltration();
                   },
                   child: Icon(
                     IconBroken.Calendar,
                     size: 28,
+                    color: context.primaryColor,
                   )),
             ],
           ),

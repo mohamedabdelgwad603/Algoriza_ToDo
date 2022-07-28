@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:todo/core/utils/hex_color.dart';
 
 class AppColors {
-  static HexColor primary = HexColor('#25c06d');
+  static Color primary = Colors.teal;
   static HexColor redColor = HexColor('#ff5147');
   static HexColor orangeColor = HexColor('#ff9d42');
   static HexColor yelColor = HexColor('#f9c50b');

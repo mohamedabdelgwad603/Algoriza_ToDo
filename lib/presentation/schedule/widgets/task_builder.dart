@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:todo/config/themes/app_theme.dart';
 import 'package:todo/core/utils/extentions.dart';
 import 'package:todo/models/task.dart';
 import 'package:todo/presentation/shared_widget/default_button.dart';
@@ -44,12 +45,12 @@ class TaskBuilder extends StatelessWidget {
               children: [
                 Text(
                   "${task.startTime} - ${task.endTime}",
-                  style: context.subtitle2!.copyWith(color: Colors.white),
+                  style: context.subtitle2,
                 ),
                 Text(
                   "${task.title} ",
                   overflow: TextOverflow.ellipsis,
-                  style: context.bodyText1!.copyWith(color: Colors.white),
+                  style: context.bodyText1,
                 ),
               ],
             ),
@@ -65,12 +66,12 @@ class TaskBuilder extends StatelessWidget {
               width: 25,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white),
+                border: Border.all(color: context.primaryColor),
               ),
               child: task.isCompleted == 1
                   ? Icon(
                       Icons.done,
-                      color: Colors.white,
+                      color: context.primaryColor,
                       size: 18,
                     )
                   : null,
@@ -98,7 +99,9 @@ class TaskBuilder extends StatelessWidget {
                           width: 100,
                           height: 5,
                           decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: cubit.themeMode == ThemeMode.dark
+                                  ? Colors.black
+                                  : Colors.white,
                               borderRadius: BorderRadius.circular(2)),
                         ),
                         SizedBox(
@@ -108,6 +111,9 @@ class TaskBuilder extends StatelessWidget {
                           DefaultButton(
                               text: 'completed',
                               color: AppColors.redColor,
+                              textColor: cubit.themeMode == ThemeMode.dark
+                                  ? Colors.black
+                                  : Colors.white,
                               onpressed: () {
                                 cubit.updateCompleted(
                                   isCompleted: 1,
@@ -122,6 +128,9 @@ class TaskBuilder extends StatelessWidget {
                         DefaultButton(
                             text: 'Delete',
                             color: AppColors.blueColor,
+                            textColor: cubit.themeMode == ThemeMode.dark
+                                ? Colors.black
+                                : Colors.white,
                             onpressed: () {
                               cubit.deleteTask(id: task.id as int);
                               Navigator.pop(context);
@@ -134,6 +143,9 @@ class TaskBuilder extends StatelessWidget {
                                 ? 'Add to favourites'
                                 : 'Remove from favourites',
                             color: AppColors.orangeColor,
+                            textColor: cubit.themeMode == ThemeMode.dark
+                                ? Colors.black
+                                : Colors.white,
                             onpressed: () {
                               cubit.updateFavourite(
                                   id: task.id as int,
@@ -151,8 +163,10 @@ class TaskBuilder extends StatelessWidget {
                     padding: EdgeInsets.all(20),
                     child: DefaultButton(
                         text: 'close',
-                        color: Colors.white,
-                        textColor: Colors.black,
+                        color: cubit.themeMode == ThemeMode.dark
+                            ? Colors.black
+                            : Colors.white,
+                        textColor: context.primaryColor,
                         isBorder: true,
                         onpressed: () {
                           Navigator.pop(context);
@@ -163,6 +177,7 @@ class TaskBuilder extends StatelessWidget {
             ),
         elevation: 50,
         clipBehavior: Clip.hardEdge,
-        backgroundColor: Colors.white);
+        backgroundColor:
+            cubit.themeMode == ThemeMode.dark ? Colors.white : Colors.black);
   }
 }

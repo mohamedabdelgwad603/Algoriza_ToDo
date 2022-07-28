@@ -3,12 +3,13 @@
 import 'package:flutter/material.dart';
 
 class AppBorderStyles {
-  static OutlineInputBorderStyle() {
+  static OutlineInputBorderStyle(Color color) {
     return OutlineInputBorder(
         // ignore: prefer_const_constructors
         borderSide: BorderSide(
-          width: 0,
-          style: BorderStyle.none,
+          width: 1,
+          color: Colors.white,
+          style: BorderStyle.solid,
         ),
         borderRadius: BorderRadius.circular(8.0));
   }
