@@ -16,24 +16,25 @@ class Task {
   String? title;
   int? isCompleted;
   int? isFavourite;
+  String? isCompletedDate;
   String? date;
   String? startTime;
   String? endTime;
   String? color;
   int? remind;
   String? repeat;
-  Task({
-    this.id,
-    this.title,
-    this.isCompleted,
-    this.isFavourite,
-    this.date,
-    this.startTime,
-    this.endTime,
-    this.color,
-    this.remind,
-    this.repeat,
-  });
+  Task(
+      {this.id,
+      this.title,
+      this.isCompleted,
+      this.isFavourite,
+      this.date,
+      this.startTime,
+      this.endTime,
+      this.color,
+      this.remind,
+      this.repeat,
+      this.isCompletedDate});
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
@@ -52,6 +53,9 @@ class Task {
     }
     if (date != null) {
       result.addAll({'date': date});
+    }
+    if (isCompletedDate != null) {
+      result.addAll({'isCompletedDate': isCompletedDate});
     }
     if (startTime != null) {
       result.addAll({'startTime': startTime});
@@ -84,6 +88,7 @@ class Task {
       color: map['color'],
       remind: map['remind']?.toInt(),
       repeat: map['repeat'],
+      isCompletedDate: map['isCompletedDate'],
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:todo/cubit/cubit.dart';
 import 'package:todo/presentation/schedule/schedule_screen.dart';
 
 import '../../../config/styles/icon_broken.dart';
+import '../../../sevices/notification_services.dart';
 
 class BoardAppBar extends StatelessWidget {
   const BoardAppBar({Key? key, required this.scaffoldState}) : super(key: key);
@@ -43,7 +44,9 @@ class BoardAppBar extends StatelessWidget {
                     cubit.changeThemeMode();
                   },
                   child: Icon(
-                    Icons.brightness_3_outlined,
+                    cubit.themeMode == ThemeMode.dark
+                        ? Icons.wb_sunny_outlined
+                        : Icons.nightlight_round_outlined,
                     size: 28,
                     color: context.primaryColor,
                   )),
@@ -52,7 +55,6 @@ class BoardAppBar extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     Constants.push(context, ScheduleScreen());
-                    cubit.getTasksAfterFiltration();
                   },
                   child: Icon(
                     IconBroken.Calendar,

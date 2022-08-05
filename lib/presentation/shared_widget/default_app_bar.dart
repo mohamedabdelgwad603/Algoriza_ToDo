@@ -5,10 +5,13 @@ import 'package:todo/core/utils/extentions.dart';
 import 'package:todo/presentation/shared_widget/default_divider.dart';
 
 class DefaultAppBar extends StatelessWidget {
-  const DefaultAppBar({Key? key, required this.text, this.onPressedArrow})
+  const DefaultAppBar(
+      {Key? key, required this.text, this.onPressedArrowBack, this.action})
       : super(key: key);
   final String text;
-  final VoidCallback? onPressedArrow;
+  final Widget? action;
+
+  final VoidCallback? onPressedArrowBack;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +27,7 @@ class DefaultAppBar extends StatelessWidget {
               MaterialButton(
                   padding: EdgeInsets.zero,
                   minWidth: 1,
-                  onPressed: onPressedArrow,
+                  onPressed: onPressedArrowBack,
                   child: Icon(
                     IconBroken.Arrow___Left_2,
                     size: 22,
@@ -34,6 +37,15 @@ class DefaultAppBar extends StatelessWidget {
                 width: 17,
               ),
               Text(text, style: context.subtitle1),
+              if (action != null) Spacer(),
+              action ??
+                  Container(
+                    height: 0,
+                  ),
+              if (action != null)
+                SizedBox(
+                  width: 10,
+                )
             ],
           ),
         ),

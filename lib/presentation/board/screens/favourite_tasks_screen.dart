@@ -19,7 +19,10 @@ class FavouriteTasksScreen extends StatelessWidget {
               .reversed
               .toList();
 
-          return ConditionalBuilderTasks(tasks: favouritesTasks);
+          return ConditionalBuilderTasks(
+            tasks: favouritesTasks,
+            isFavourite: true,
+          );
         });
   }
 }

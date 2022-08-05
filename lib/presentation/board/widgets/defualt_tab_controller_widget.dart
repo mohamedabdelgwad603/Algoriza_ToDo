@@ -25,18 +25,15 @@ class DefaultTabControllerWidget extends StatelessWidget {
             DefaultDivider(),
             //TabBarView
             Expanded(
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Container(
-                  height: 400,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  child: TabBarView(children: [
-                    AllTasksScreen(),
-                    CompletedTasksScreen(),
-                    UnCompletedTasksScreen(),
-                    FavouriteTasksScreen()
-                  ]),
-                ),
+              child: Container(
+                height: 400,
+                // ignore: prefer_const_literals_to_create_immutables
+                child: TabBarView(children: [
+                  AllTasksScreen(),
+                  CompletedTasksScreen(),
+                  UnCompletedTasksScreen(),
+                  FavouriteTasksScreen()
+                ]),
               ),
             )
           ],

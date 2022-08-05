@@ -26,58 +26,58 @@ class DefaultFormField extends StatelessWidget {
   final void Function(String)? onChange;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 55,
-      child: TextFormField(
-        controller: controller,
-        keyboardType: inputType,
-        onChanged: onChange,
-        validator: validate,
-        style: context.bodyText1,
-        cursorColor: context.primaryColor,
-        decoration: InputDecoration(
-          hintStyle: context.caption?.copyWith(fontSize: 16),
-          enabledBorder: OutlineInputBorder(
-              // ignore: prefer_const_constructors
-              borderSide: BorderSide(
-                width: 1,
-                color: context.primaryColor,
-                style: BorderStyle.solid,
-              ),
-              borderRadius: BorderRadius.circular(8.0)),
-          border: OutlineInputBorder(
-              // ignore: prefer_const_constructors
-              borderSide: BorderSide(
-                width: 1,
-                color: context.primaryColor,
-                style: BorderStyle.solid,
-              ),
-              borderRadius: BorderRadius.circular(8.0)),
-          focusedBorder: OutlineInputBorder(
-              // ignore: prefer_const_constructors
-              borderSide: BorderSide(
-                width: 1,
-                color: context.primaryColor,
-                style: BorderStyle.solid,
-              ),
-              borderRadius: BorderRadius.circular(8.0)),
-          //enabledBorder: InputBorder.none,
-          errorBorder: OutlineInputBorder(
-              // ignore: prefer_const_constructors
-              borderSide: BorderSide(
-                width: 1,
-                color: context.primaryColor,
-                style: BorderStyle.solid,
-              ),
-              borderRadius: BorderRadius.circular(8.0)),
+    return TextFormField(
+      controller: controller,
+      keyboardType: inputType,
+      onChanged: onChange,
+      validator: validate,
+      style: context.bodyText1,
+      cursorColor: context.primaryColor,
+      readOnly: widget != null ? true : false,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        hintStyle: context.caption?.copyWith(fontSize: 16),
+        enabledBorder: OutlineInputBorder(
+            gapPadding: 10,
+            // ignore: prefer_const_constructors
+            borderSide: BorderSide(
+              width: 1,
+              color: context.primaryColor,
+              style: BorderStyle.solid,
+            ),
+            borderRadius: BorderRadius.circular(8.0)),
+        border: OutlineInputBorder(
+            // ignore: prefer_const_constructors
+            borderSide: BorderSide(
+              width: 1,
+              color: context.primaryColor,
+              style: BorderStyle.solid,
+            ),
+            borderRadius: BorderRadius.circular(8.0)),
+        focusedBorder: OutlineInputBorder(
+            // ignore: prefer_const_constructors
+            borderSide: BorderSide(
+              width: 1,
+              color: context.primaryColor,
+              style: BorderStyle.solid,
+            ),
+            borderRadius: BorderRadius.circular(8.0)),
+        //enabledBorder: InputBorder.none,
+        errorBorder: OutlineInputBorder(
+            // ignore: prefer_const_constructors
+            borderSide: BorderSide(
+              width: 1,
+              color: context.primaryColor,
+              style: BorderStyle.solid,
+            ),
+            borderRadius: BorderRadius.circular(8.0)),
 
-          filled: true,
-          fillColor: context.cubit.themeMode == ThemeMode.dark
-              ? Colors.black
-              : Colors.white,
-          hintText: hint,
-          suffixIcon: widget,
-        ),
+        filled: true,
+        fillColor: context.cubit.themeMode == ThemeMode.dark
+            ? Colors.black
+            : Colors.white,
+        hintText: hint,
+        suffixIcon: widget,
       ),
     );
   }

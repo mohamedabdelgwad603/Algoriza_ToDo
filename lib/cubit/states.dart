@@ -1,12 +1,14 @@
 abstract class AppStates {}
 
-class intialState extends AppStates {}
+class IntialState extends AppStates {}
 
 class BottomNavChangeState extends AppStates {}
 
 class ChangeIsBottmomShowState extends AppStates {}
 
 class CreateDataBaseState extends AppStates {}
+
+class GetLoadingDataBaseState extends AppStates {}
 
 class InsertDataBaseState extends AppStates {}
 

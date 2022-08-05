@@ -29,12 +29,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   TextEditingController dateController = TextEditingController(
       text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
 
-  TextEditingController startTimeController = TextEditingController();
+  TextEditingController startTimeController =
+      TextEditingController(text: DateFormat('hh:mm a').format(DateTime.now()));
 
-  TextEditingController endTimeController = TextEditingController();
+  TextEditingController endTimeController = TextEditingController(
+      text: DateFormat('hh:mm a')
+          .format(DateTime.now().add(Duration(minutes: 15))));
 
   TextEditingController remindController =
-      TextEditingController(text: '5 minutes early');
+      TextEditingController(text: '0 minutes early');
 
   TextEditingController repeatController = TextEditingController(text: 'none');
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -43,7 +46,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   bool isBlue = false;
   bool isOrange = false;
 
-  List<int> remindItems = [5, 10, 15, 20];
+  List<int> remindItems = [0, 5, 10, 15, 20];
 
   List<String> repeatItems = ['none', 'Daily', 'Weekly', 'Monthly'];
 
@@ -79,7 +82,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               children: [
                 DefaultAppBar(
                   text: 'Add task',
-                  onPressedArrow: () {
+                  onPressedArrowBack: () {
                     Navigator.pop(context);
                   },
                 ),
@@ -177,8 +180,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                                 context: context,
                                                 initialTime: TimeOfDay.now(),
                                               ).then((timeofDay) {
-                                                startTimeController.text =
-                                                    timeofDay!.format(context);
+                                                if (timeofDay != null) {
+                                                  startTimeController.text =
+                                                      timeofDay.format(context);
+                                                }
                                               });
                                             },
                                           ),
@@ -216,9 +221,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                                     initialTime:
                                                         TimeOfDay.now(),
                                                   ).then((timeofDay) {
-                                                    endTimeController.text =
-                                                        timeofDay!
-                                                            .format(context);
+                                                    if (timeofDay != null) {
+                                                      endTimeController.text =
+                                                          timeofDay
+                                                              .format(context);
+                                                    }
                                                   });
                                                 }))
                                       ],
@@ -254,7 +261,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                         .toList(),
                                     onChanged: (value) {
                                       remindController.text =
-                                          value.toString() + ' minutes early';
+                                          '$value' ' minutes early';
                                     })),
                             SizedBox(
                               height: 20,
@@ -408,6 +415,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                           .first),
                                       repeat: repeatController.text,
                                       isCompleted: 0,
+                                      isCompletedDate: '',
                                       isFavourit: 0,
                                     );
                                     Constants.pushReplace(

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -7,16 +5,17 @@ import 'package:sqflite/sqflite.dart';
 import 'package:todo/models/task.dart';
 import 'package:todo/network/local/cashe_helper.dart';
 
-import '../config/themes/app_theme.dart';
 import 'states.dart';
 
 class AppCubit extends Cubit<AppStates> {
-  AppCubit() : super(intialState());
+  AppCubit() : super(IntialState());
 
   late Database database;
-  // deleteAll() async {
-  //   await deleteDatabase('todo.db').then((value) => print('deleted'));
-  // }
+  deleteAllTasks() async {
+    await database
+        .delete('tasks')
+        .then((value) => getDataFromDataBase(database));
+  }
 
   createDataBase() async {
     //openDatabase(path,on create ,on open ) function that within it , we create db and create table an open db
@@ -25,7 +24,7 @@ class AppCubit extends Cubit<AppStates> {
           'db is created and given me object of it is called db and version $version ');
       db
           .execute(
-              'CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, isCompleted INTEGER ,isFavourite INTEGER  ,date TEXT, startTime TEXT, endTime TEXT ,color TEXT ,remind INTEGER ,repeat TEXT )')
+              'CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT, isCompleted INTEGER ,isFavourite INTEGER  ,date TEXT, startTime TEXT, endTime TEXT ,color TEXT ,remind INTEGER ,repeat TEXT, isCompletedDate TEXT )')
           .then((value) => print('table is created'))
           .catchError((onError) {
         print('error is ${onError.toString()}');
@@ -35,7 +34,7 @@ class AppCubit extends Cubit<AppStates> {
       print('db is opened');
     }).then((value) {
       database = value;
-      emit(CreateDataBaseState());
+      //  emit(CreateDataBaseState());
     });
   }
 
@@ -48,7 +47,8 @@ class AppCubit extends Cubit<AppStates> {
       required int? remind,
       required String? repeat,
       required int? isFavourit,
-      required int? isCompleted}) {
+      required int? isCompleted,
+      required String? isCompletedDate}) {
     Task task = Task(
         title: title,
         date: date,
@@ -58,7 +58,8 @@ class AppCubit extends Cubit<AppStates> {
         remind: remind,
         repeat: repeat,
         isCompleted: isCompleted,
-        isFavourite: isFavourit);
+        isFavourite: isFavourit,
+        isCompletedDate: isCompletedDate);
 
     database.transaction((txn) {
       // return txn.rawInsert(
@@ -77,13 +78,14 @@ class AppCubit extends Cubit<AppStates> {
   List<Task> completedTasks = [];
   List<Task> uncompletedTasks = [];
   List<Task> favouritesTasks = [];
-  getDataFromDataBase(Database database) async {
+  getDataFromDataBase(Database database) {
     allTasks = [];
     completedTasks = [];
     uncompletedTasks = [];
     favouritesTasks = [];
+    emit(GetLoadingDataBaseState());
 
-    await database.rawQuery("SELECT * FROM tasks").then((value) {
+    database.rawQuery("SELECT * FROM tasks").then((value) {
       //allTasksModel = TaskModel.fromMap(value);
       //  print(allTasksModel!.tasks![0].title);
       print(value);
@@ -98,15 +100,19 @@ class AppCubit extends Cubit<AppStates> {
         if (element['isFavourite'] == 1)
           favouritesTasks.add(Task.fromMap(element));
       });
-
       emit(GetFromDataBaseState());
     });
   }
 
-  Future updateCompleted({required int isCompleted, required int id}) async {
+  Future updateCompleted(
+      {required int isCompleted,
+      required int id,
+      required String isCompletedDate}) async {
     // Update some record
-    await database.rawUpdate('UPDATE tasks SET isCompleted = ? WHERE id = ?',
-        [isCompleted, id]).then((value) {
+
+    await database.rawUpdate(
+        'UPDATE tasks SET isCompleted = ? , isCompletedDate = ?  WHERE id = ?',
+        [isCompleted, isCompletedDate, id]).then((value) {
       getDataFromDataBase(database);
     });
   }
@@ -136,9 +142,9 @@ class AppCubit extends Cubit<AppStates> {
 
   ///TODO:this function that make filtration for tasks and Set tasks for each day , it is called when  state is GetFromDataBaseState or state is GetSelectedDate
 
-  List<Task> filteredTasks = [];
-  getTasksAfterFiltration() {
-    filteredTasks = [];
+  List<Task> schudeledTasks = [];
+  getSchudeledTasks() {
+    schudeledTasks = [];
 
     allTasks.forEach((element) {
       if (
@@ -162,7 +168,7 @@ class AppCubit extends Cubit<AppStates> {
               (element.repeat == 'Monthly' &&
                   DateFormat('yyyy-MM-dd').parse(element.date.toString()).day ==
                       selectedDate.day)) {
-        filteredTasks.add(element);
+        schudeledTasks.add(element);
         emit(GetTasksAfterFiltrationState());
       }
     });

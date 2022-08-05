@@ -16,10 +16,17 @@ class Themes {
       //brightness: Brightness.light,
       scaffoldBackgroundColor: Colors.white,
       // fontFamily: AppStrings.fontFamily,
+      colorScheme: ColorScheme.light(
+        // <-- SEE HERE
+        primary: AppColors.primary,
+        onPrimary: AppColors.yelColor,
+        // <-- SEE HERE
+        onSurface: Colors.black, // <-- SEE HERE
+      ),
       textTheme: TextTheme(
           caption: TextStyle(fontSize: 18, color: Colors.grey[300]),
           button: TextStyle(
-              color: Colors.black.withOpacity(.5),
+              color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,
               fontFamily: AppStrings.fontFamily),
@@ -45,6 +52,13 @@ class Themes {
       scaffoldBackgroundColor: Colors.black,
       //  brightness: Brightness.dark,
       // fontFamily: AppStrings.fontFamily,
+      colorScheme: ColorScheme.dark(
+        // <-- SEE HERE
+        primary: AppColors.primary,
+        onPrimary: AppColors.yelColor,
+        // <-- SEE HERE
+        onSurface: Colors.white, // <-- SEE HERE
+      ),
       textTheme: TextTheme(
           caption: TextStyle(fontSize: 18, color: Colors.white),
           button: TextStyle(

@@ -1,3 +1,4 @@
+import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/core/utils/hex_color.dart';
 
